@@ -34,7 +34,57 @@
  *
  */
 function parseBankAccount(bankAccount) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    function getNumberFromBankString (str) {
+        switch (str) {
+            case ' _ ' +
+                 '| |' +
+                 '|_|':
+                return 0;
+            case '   ' +
+                 '  |' +
+                 '  |':
+                return 1;
+            case ' _ ' +
+                 ' _|' +
+                 '|_ ':
+                return 2;
+            case ' _ ' +
+                 ' _|' +
+                 ' _|':
+                return 3;
+            case '   ' +
+                 '|_|' +
+                 '  |':
+                return 4;
+            case ' _ ' +
+                 '|_ ' +
+                 ' _|':
+                return 5;
+            case ' _ ' +
+                 '|_ ' +
+                 '|_|':
+                return 6;
+            case ' _ ' +
+                 '  |' +
+                 '  |':
+                return 7;
+            case ' _ ' +
+                 '|_|' +
+                 '|_|':
+                return 8;
+            case ' _ ' +
+                 '|_|' +
+                 ' _|':
+                return 9;
+        }
+    }
+    let splitted = bankAccount.split('\n'), res = 0, curr;
+    for (let i = 0; i < splitted[0].length; i += 3) {
+        curr = splitted[0].slice(i, i + 3) + splitted[1].slice(i, i + 3) + splitted[2].slice(i, i + 3);
+        res = res * 10 + getNumberFromBankString(curr);
+    }
+    return res;
 }
 
 
@@ -63,7 +113,8 @@ function parseBankAccount(bankAccount) {
  *                                                                                                'characters.'
  */
 function* wrapText(text, columns) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+
 }
 
 
@@ -100,7 +151,50 @@ const PokerRank = {
 }
 
 function getPokerHandRank(hand) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    const PokerRank = {
+        StraightFlush: 8,
+        FourOfKind: 7,
+        FullHouse: 6,
+        Flush: 5,
+        Straight: 4,
+        ThreeOfKind: 3,
+        TwoPairs: 2,
+        OnePair: 1,
+        HighCard: 0
+    }
+
+    let cards = '234567891JQKA'
+    let ranks = hand.map(v => v[0]).sort((a, b) => cards.indexOf(a) - cards.indexOf(b)).join('');
+    let suits = hand.map(v => v[v.length - 1]).join('');
+    let groupedRanks = ranks.match(/(.)\1{0,99}/g);
+    let groupedSuits = suits.match(/(.)\1{0,99}/g);
+    if (groupedSuits.length == 1 && (cards.indexOf(ranks) != -1 || ranks == '2345A')) {
+        return PokerRank.StraightFlush;
+    }
+    if (groupedRanks[0].length == 4 || groupedRanks[1].length == 4) {
+        return PokerRank.FourOfKind;
+    }
+    if (groupedRanks[0].length + groupedRanks[1].length == 5) {
+        return PokerRank.FullHouse;
+    }
+    if (groupedSuits.length == 1) {
+        return PokerRank.Flush;
+    }
+    if (cards.indexOf(ranks) != -1 || ranks == '2345A') {
+        return PokerRank.Straight;
+    }
+    if (groupedRanks[0].length == 3 || groupedRanks[1].length == 3 || groupedRanks[2].length == 3) {
+        return PokerRank.ThreeOfKind;
+    }
+    if (groupedRanks[0].length + groupedRanks[1].length + groupedRanks[2].length == 5) {
+        return PokerRank.TwoPairs;
+    }
+    if (groupedRanks[0].length + groupedRanks[1].length + groupedRanks[2].length + groupedRanks[3].length == 5) {
+        return PokerRank.OnePair;
+    }
+    return PokerRank.HighCard;
+
 }
 
 
@@ -135,7 +229,8 @@ function getPokerHandRank(hand) {
  *    '+-------------+\n'
  */
 function* getFigureRectangles(figure) {
-   throw new Error('Not implemented');
+//    throw new Error('Not implemented');
+    
 }
 
 

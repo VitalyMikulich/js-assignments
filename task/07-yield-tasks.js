@@ -33,7 +33,27 @@
  *
  */
 function* get99BottlesOfBeer() {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    let song = [];
+    for (let i = 99; i > 2; i--) {
+        song.push(`${i} bottles of beer on the wall, ${i} bottles of beer.`);
+        yield `${i} bottles of beer on the wall, ${i} bottles of beer.`;
+        song.push(`Take one down and pass it around, ${i-1} bottles of beer on the wall.`);
+        yield `Take one down and pass it around, ${i-1} bottles of beer on the wall.`;
+    }
+    song.push(`2 bottles of beer on the wall, 2 bottles of beer.`);
+    yield `2 bottles of beer on the wall, 2 bottles of beer.`;
+    song.push(`Take one down and pass it around, 1 bottle of beer on the wall.`);
+    yield `Take one down and pass it around, 1 bottle of beer on the wall.`;
+    yield `1 bottle of beer on the wall, 1 bottle of beer.`;
+    song.push(`1 bottle of beer on the wall, 1 bottle of beer.`);
+    yield `Take one down and pass it around, no more bottles of beer on the wall.`;
+    song.push(`Take one down and pass it around, no more bottles of beer on the wall.`);
+    yield `No more bottles of beer on the wall, no more bottles of beer.`;
+    song.push(`No more bottles of beer on the wall, no more bottles of beer.`);
+    yield `Go to the store and buy some more, 99 bottles of beer on the wall.`;
+    song.push(`Go to the store and buy some more, 99 bottles of beer on the wall.`);
+    return song;
 }
 
 
@@ -47,7 +67,16 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    let cur = 1;
+    let prev = 0;
+    let tmp = prev;
+    while(true) {
+        yield prev;
+        prev = cur;
+        cur += tmp;
+        tmp = prev;
+    }
 }
 
 
@@ -83,6 +112,15 @@ function* getFibonacciSequence() {
  */
 function* depthTraversalTree(root) {
     throw new Error('Not implemented');
+    // let result = [root];
+    // yield root;
+    // let childrens = root.children;
+    // if (childrens) {
+    //     for (let i = 0; i < childrens.length; i++) {
+    //         result = result.concat(yield* depthTraversalTree(childrens[i]));
+    //     }
+    // }
+    // return result;
 }
 
 

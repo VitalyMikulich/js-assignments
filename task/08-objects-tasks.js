@@ -23,7 +23,13 @@
  *    console.log(r.getArea());   // => 200
  */
 function Rectangle(width, height) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    this.width = width;
+    this.height = height;
+}
+
+Rectangle.prototype.getArea = function() {
+    return this.width * this.height;
 }
 
 
@@ -38,7 +44,8 @@ function Rectangle(width, height) {
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
 function getJSON(obj) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    return JSON.stringify(obj);
 }
 
 
@@ -54,7 +61,9 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    return Object.create(proto, JSON.parse(json));
+
 }
 
 
@@ -106,36 +115,58 @@ function fromJSON(proto, json) {
  *  For more examples see unit tests.
  */
 
-const cssSelectorBuilder = {
+    const cssSelectorBuilder = {
 
-    element: function(value) {
-        throw new Error('Not implemented');
-    },
+        result: '',
 
-    id: function(value) {
-        throw new Error('Not implemented');
-    },
+        element: function(value) {
+            this.result += " " + value;
+            this.result = this.result.trim();
+            return this;
+        },
 
-    class: function(value) {
-        throw new Error('Not implemented');
-    },
+        id: function(value) {
+            this.result += '#' + value;
+            return this;
+        },
 
-    attr: function(value) {
-        throw new Error('Not implemented');
-    },
+        class: function(value) {
+            this.result += '.' + value;
+            return this;
+        },
 
-    pseudoClass: function(value) {
-        throw new Error('Not implemented');
-    },
+        attr: function(value) {
+            this.result +=  `[${value}]`;
+            return this;
+        },
 
-    pseudoElement: function(value) {
-        throw new Error('Not implemented');
-    },
+        pseudoClass: function(value) {
+            this.result += ':' + value;
+            return this;
+        },
 
-    combine: function(selector1, combinator, selector2) {
-        throw new Error('Not implemented');
-    },
-};
+        pseudoElement: function(value) {
+            this.result += '::' + value;
+            return this;
+        },
+
+        combine: function(selector1, combinator, selector2) {
+            throw new Error('Not implemented');
+            let res = selector1.result;
+            this.result = '';
+            let res2 = selector2.result;
+            let res3 = `${res}${res2}`;
+            res3.splice(' ' + combinator, res3.indexOf(selector2.result), 0);
+            this.result = res3;
+            return this;
+        },
+
+        stringify: function() {
+            let res = this.result;
+            this.result = '';
+            return res;
+        }
+    };
 
 
 module.exports = {

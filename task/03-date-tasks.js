@@ -22,7 +22,8 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   // throw new Error('Not implemented');
+   return new Date(value);
 }
 
 /**
@@ -37,7 +38,8 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+   // throw new Error('Not implemented');
+   return new Date(value);
 }
 
 
@@ -56,9 +58,9 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   // throw new Error('Not implemented');
+   return ((date.getFullYear() % 4 == 0) && (date.getFullYear() % 100 != 0)) || (date.getFullYear() % 400 == 0);
 }
-
 
 /**
  * Returns the string represention of the timespan between two dates.
@@ -77,6 +79,8 @@ function isLeapYear(date) {
  */
 function timeSpanToString(startDate, endDate) {
    throw new Error('Not implemented');
+   let date = new Date(endDate - startDate);
+   return date.toISOString();
 }
 
 
@@ -94,7 +98,23 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+
+   // date = new Date(date);
+   let minute = date.getMinutes();
+   let hour = date.getHours();
+   let minAngle = 360*(minute/60);
+   let hourAngle = (360*(hour/12))+((360/12)*(minute/60));
+   console.log("minute angle = " + minAngle);
+   console.log("hour angle = " + hourAngle);
+   //   if(minAngle > hourAngle) {
+   //       return minAngle - hourAngle;
+   //   }
+   //   else {
+   //       return hourAngle - minAngle;
+   //   }
+   console.log(hourAngle - minAngle);
+   
+   // return (Math.PI * (hourAngle - minAngle)) / 180;
 }
 
 

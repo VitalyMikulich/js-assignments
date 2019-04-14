@@ -19,6 +19,15 @@
 function createCompassPoints() {
     throw new Error('Not implemented');
     var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+    let res = [];
+    let az = {
+        abbreviation: 'N',
+        azimuth : 0.00
+    };
+    while(az.azimuth <= 348.75) {
+        res.push(az);
+        az.azimuth += 11.25;
+    }
 }
 
 
@@ -56,7 +65,21 @@ function createCompassPoints() {
  *   'nothing to do' => 'nothing to do'
  */
 function* expandBraces(str) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    let count = c => c == '{' ? 1 : c == '}' ? -1 : 0
+    let start = str.indexOf('{');
+    let end = start + 1;
+    let ctr = 1;
+
+    if (start < 0) return [str]
+    while (ctr) {
+        ctr += count(str[end++]);
+    }
+    return [...str.slice(start + 1, end - 1)]
+        .map(c => !(ctr += count(c)) && c == ',' ? ';' : c)
+        .join('').split(';')
+        .map(s => str.slice(0, start) + s + str.slice(end))
+        .reduce((all, some) => all.concat(expandBraces(some)), [])
 }
 
 
@@ -88,7 +111,52 @@ function* expandBraces(str) {
  *
  */
 function getZigZagMatrix(n) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+     function rowsFromDiagonals(n, lst) {
+        if (lst.length) {
+            let [edge, rest] = splitAt(n, lst);
+ 
+            return [edge.map(x => x[0])]
+                .concat(rowsFromDiagonals(n,
+                    edge.filter(x => x.length > 1)
+                    .map(x => x.slice(1))
+                    .concat(rest)
+                ));
+        } else return [];
+    }
+ 
+    function splitAt(n, xs) {
+        return [xs.slice(0, n), xs.slice(n)];
+    }
+ 
+    function range(m, n, step) {
+        let d = (step || 1) * (n >= m ? 1 : -1);
+ 
+        return Array.from({
+            length: Math.floor((n - m) / d) + 1
+        }, (_, i) => m + (i * d));
+    }
+ 
+    return rowsFromDiagonals(n,
+        diagonals(n)
+        .map((x, i) => (i % 2 || x.reverse()) && x)
+    );
+
+    function diagonals(n) {
+        let diags = (xs, iCol, iRow) => {
+            if (iCol < xs.length) {
+                let xxs = splitAt(iCol, xs);
+ 
+                return [xxs[0]].concat(diags(
+                    xxs[1],
+                    iCol + (iRow < n ? 1 : -1),
+                    iRow + 1
+                ));
+            } else return [xs];
+        }
+ 
+        return diags(range(0, n **2 - 1), 1, 1);
+    }
 }
 
 
@@ -137,7 +205,13 @@ function canDominoesMakeRow(dominoes) {
  * [ 1, 2, 4, 5]          => '1,2,4,5'
  */
 function extractRanges(nums) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    let res = '';
+    let cache = [nums[0]];
+    let index
+    for(let i = 1; i < nums.length; i++) {
+
+    }
 }
 
 module.exports = {
